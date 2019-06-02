@@ -15,6 +15,8 @@ public:
     explicit Librarian(QObject *parent = nullptr);
     Librarian(const QDir &sourcePath,const QDir &outputPath, const QStringList fileNames, QObject *parent = nullptr);
 
+    void run();
+
 signals:
 
 public slots:
@@ -24,6 +26,7 @@ private:
     QDir _sourcePath;
     QDir _outputPath;
     QStringList _fileNames;
+    QList<QFileInfo> _fileInfoList;
 
 };
 
