@@ -14,6 +14,8 @@ class FileCollerctor : public QObject
 public:
     explicit FileCollerctor(QObject *parent = nullptr);
 
+    FileCollerctor(const QString &catalogName, QObject *parent = nullptr);
+
 signals:
 
 public slots:
