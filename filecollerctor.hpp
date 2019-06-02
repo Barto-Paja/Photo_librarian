@@ -19,9 +19,17 @@ public:
 
     void run();
 
+    QStringList fileNames() const;
+
 signals:
 
 public slots:
+
+private:
+
+    QDir _path;
+    QStringList _fileNames;
+
 };
 
 #endif // FILECOLLERCTOR_HPP

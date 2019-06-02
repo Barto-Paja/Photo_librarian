@@ -21,5 +21,10 @@ FileCollerctor::FileCollerctor(const QDir &path, QObject *parent)
 
 void FileCollerctor::run()
 {
+    _fileNames = _path.entryList(QDir::Files);
+}
 
+QStringList FileCollerctor::fileNames() const
+{
+    return _fileNames;
 }
