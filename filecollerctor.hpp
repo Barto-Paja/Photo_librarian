@@ -15,6 +15,9 @@ public:
     explicit FileCollerctor(QObject *parent = nullptr);
 
     FileCollerctor(const QString &catalogName, QObject *parent = nullptr);
+    FileCollerctor(const QDir &path, QObject *parent = nullptr);
+
+    void run();
 
 signals:
 
