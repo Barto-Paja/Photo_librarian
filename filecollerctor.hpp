@@ -2,6 +2,11 @@
 #define FILECOLLERCTOR_HPP
 
 #include <QObject>
+#include <QDir>
+#include <QDirIterator>
+
+#include <QList>
+#include <QStringList>
 
 class FileCollerctor : public QObject
 {
