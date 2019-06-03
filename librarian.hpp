@@ -8,6 +8,9 @@
 #include <QFileInfo>
 #include <QByteArray>
 
+#include <QDateTime>
+#include <QDebug>
+
 class Librarian : public QObject
 {
     Q_OBJECT
