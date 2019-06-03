@@ -26,11 +26,13 @@ CONFIG += c++11
 
 SOURCES += \
         filecollerctor.cpp \
+        librarian.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
         filecollerctor.hpp \
+        librarian.hpp \
         mainwindow.h
 
 FORMS += \
