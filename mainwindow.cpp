@@ -53,9 +53,24 @@ void MainWindow::on_pushButton_start_clicked()
         this->update();
     });
 
-    lb.run();
+    if(ui->radioButton_day->isChecked())
+    {
+        lb.run(day);
+    }
+    else if (ui->radioButton_month->isChecked())
+    {
+        lb.run(month);
+    }
+    else if (ui->radioButton_year->isChecked())
+    {
+        lb.run(year);
+    }
+    else
+    {
+        lb.run();
+    }
 
-    QThread::sleep(2);
+    QThread::sleep(1);
     nextPage();
 }
 

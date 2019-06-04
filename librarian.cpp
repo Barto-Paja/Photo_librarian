@@ -12,7 +12,7 @@ Librarian::Librarian(const QDir &sourcePath, const QDir &outputPath, const QStri
     _fileNames  = fileNames;
 }
 
-void Librarian::run()
+void Librarian::run(SortPrecision value)
 {
     QStringListIterator iterator(_fileNames);
 
@@ -25,7 +25,26 @@ void Librarian::run()
     auto i = 0;
     for(i = 0 ;i < _fileInfoList.count(); ++i)
     {
-        QString dirName = _fileInfoList[i].lastModified().date().toString("yyyy-MM-dd");
+        QString dirName;
+
+        switch (value) {
+        case day:
+        {
+            dirName = _fileInfoList[i].lastModified().date().toString("yyyy-MM-dd");
+            break;
+        }
+        case month:
+        {
+            dirName = _fileInfoList[i].lastModified().date().toString("yyyy-MM");
+            break;
+        }
+        case year:
+        {
+            dirName = _fileInfoList[i].lastModified().date().toString("yyyy");
+            break;
+        }
+        }
+
         QString srcFile = _fileInfoList[i].filePath();
         QString outPath = _outputPath.path()+"/"+dirName;
         QString outFile = outPath+"/"+_fileInfoList[i].fileName();

@@ -11,6 +11,13 @@
 #include <QDateTime>
 #include <QDebug>
 
+typedef enum
+{
+    day = 0,
+    month,
+    year
+}SortPrecision;
+
 class Librarian : public QObject
 {
     Q_OBJECT
@@ -18,7 +25,7 @@ public:
     explicit Librarian(QObject *parent = nullptr);
     Librarian(const QDir &sourcePath,const QDir &outputPath, const QStringList fileNames, QObject *parent = nullptr);
 
-    void run();
+    void run(SortPrecision value = day);
 
 signals:
 
