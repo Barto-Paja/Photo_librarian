@@ -81,7 +81,6 @@ void MainWindow::cellClicked(int row, int column)
         QString command = QString("explorer \"%1\\%2\"")
                 .arg(QDir::toNativeSeparators(_outputDirectory.path()))
                 .arg(ui->tableWidget->item(row,0)->text());
-        qDebug() << command;
         QProcess::execute(command);
     }
     if(column == 0)
@@ -107,10 +106,9 @@ void MainWindow::cellChanged(QTableWidgetItem *item)
 
 void MainWindow::nextPage()
 {
-    qDebug() << _outputDirectory.path();
     QStringList _catalogs = _outputDirectory.entryList();
     QStringList headers;
-    headers << tr("Catalog Name") << tr("Explorer");
+    headers << tr("Catalog Name") << tr("P");
 
     ui->tableWidget->setColumnCount(2);
     //ui->tableWidget->insertColumn(1);
@@ -121,9 +119,7 @@ void MainWindow::nextPage()
 
     for(int i = 2; i < _catalogs.count(); ++i)
     {
-        qDebug() << i << _catalogs.value(i);
         int row = ui->tableWidget->rowCount();
-        qDebug() << row;
         ui->tableWidget->insertRow(row);
         ui->tableWidget->setItem(row,0,new QTableWidgetItem(_catalogs.value(i)));
         ui->tableWidget->setItem(row,1,new QTableWidgetItem(icon,""));
@@ -148,7 +144,7 @@ void MainWindow::on_pushButton_back_clicked()
 }
 
 void MainWindow::on_pushButton_exit_clicked()
-{
+{  
     exit(0);
 }
 
