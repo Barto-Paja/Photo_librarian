@@ -22,7 +22,8 @@ void Librarian::run()
         _fileInfoList.append(fileInfo);
     }
 
-    for(int i = 0;i < _fileInfoList.count(); ++i)
+    auto i = 0;
+    for(i = 0 ;i < _fileInfoList.count(); ++i)
     {
         QString dirName = _fileInfoList[i].lastModified().date().toString("yyyy-MM-dd");
         QString srcFile = _fileInfoList[i].filePath();
@@ -38,6 +39,8 @@ void Librarian::run()
         QFile file(srcFile);
         file.open(QIODevice::ReadWrite);
         file.setPermissions(QFile::WriteOwner);
+        emit beeingCopy(file.fileName(), i);
+
         if(!file.copy(outFile))
         {
             qDebug() << file.error() << file.errorString();
@@ -45,5 +48,6 @@ void Librarian::run()
 
     }
 
-    qDebug() << "PROCESS - DONE";
+    ++i;
+    emit beeingCopy("Gotowe", _fileInfoList.count());
 }

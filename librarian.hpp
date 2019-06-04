@@ -22,6 +22,8 @@ public:
 
 signals:
 
+    void beeingCopy(QString filename, int index);
+
 public slots:
 
 private:

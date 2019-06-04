@@ -22,8 +22,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_language_clicked();
-
     void on_pushButton_BrowseSource_clicked();
 
     void on_pushButton_BrowseOutput_clicked();

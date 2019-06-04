@@ -4,22 +4,21 @@
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QProcess>
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->progressBar->setHidden(true);
+    ui->label_3->setHidden(true);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_pushButton_language_clicked()
-{
-
 }
 
 void MainWindow::on_pushButton_BrowseSource_clicked()
@@ -39,9 +38,24 @@ void MainWindow::on_pushButton_start_clicked()
     FileCollerctor fc(_sourceDirectory);
     fc.run();
 
+    ui->progressBar->setValue(0);
+    ui->progressBar->setHidden(false);
+
     Librarian lb(_sourceDirectory,_outputDirectory,fc.fileNames());
+
+    int count = fc.fileNames().count();
+    ui->progressBar->setMaximum(count);
+    connect(&lb, &Librarian::beeingCopy,[this](const QString &value, int index)
+    {
+        ui->label_3->setHidden(false);
+        ui->label_3->setText(value);
+        ui->progressBar->setValue(index);
+        this->update();
+    });
+
     lb.run();
 
+    QThread::sleep(2);
     nextPage();
 }
 
@@ -65,8 +79,14 @@ void MainWindow::cellChanged(QTableWidgetItem *item)
 {
     if(item->column() == 0)
     {
-        QDir directory(_outputDirectory.path()+"/"+_oldCatalogName);
-        directory.rename(directory.path(),QString("../%1").arg(ui->tableWidget->item(item->row(),0)->text()));
+        if(ui->tableWidget->item(item->row(),0)->text().isEmpty())
+        {
+            ui->tableWidget->item(item->row(),0)->setText(_oldCatalogName);
+        }
+        else {
+            QDir directory(_outputDirectory.path()+"/"+_oldCatalogName);
+            directory.rename(directory.path(),QString("../%1").arg(ui->tableWidget->item(item->row(),0)->text()));
+        }
     }
 }
 
@@ -104,6 +124,11 @@ void MainWindow::nextPage()
 
 void MainWindow::on_pushButton_back_clicked()
 {
+    ui->tableWidget->clearContents();
+    ui->tableWidget->clear();
+    ui->tableWidget->setRowCount(0);
+    ui->progressBar->setHidden(true);
+    ui->label_3->setHidden(true);
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -111,3 +136,4 @@ void MainWindow::on_pushButton_exit_clicked()
 {
     exit(0);
 }
+
